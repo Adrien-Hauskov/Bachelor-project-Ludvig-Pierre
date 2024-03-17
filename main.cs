@@ -10,12 +10,20 @@ class Program
         string[] lines = File.ReadAllLines(filePath);
 
         // Assuming the matrix is of type double
-        double[][] matrix = lines.Select(line => line.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+        double[][] matrix = lines.Skip(4).Select(line => line.Split(' ', StringSplitOptions.RemoveEmptyEntries)
                                                       .Select(double.Parse)
                                                       .ToArray())
                                  .ToArray();
 
-        // Print the matrix
+
+        foreach (var row in matrix)
+        {
+            Console.WriteLine(string.Join(" ", row));
+        }
+        Console.WriteLine("modified");
+        RandomWalkAlgorithm rw = new RandomWalkAlgorithm();
+        rw.ApplyAlgorithm(matrix);
+
         foreach (var row in matrix)
         {
             Console.WriteLine(string.Join(" ", row));

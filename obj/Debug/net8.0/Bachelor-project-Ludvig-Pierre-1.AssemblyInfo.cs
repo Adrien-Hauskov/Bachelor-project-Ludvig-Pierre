@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bachelor-project-Ludvig-Pierre-1")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+776a1b4ddbf484d1f56c1721145e21693a117cae")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+747edad149b5494cddcbba0e78b611999721e8bb")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bachelor-project-Ludvig-Pierre-1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bachelor-project-Ludvig-Pierre-1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
