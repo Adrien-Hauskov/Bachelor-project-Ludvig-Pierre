@@ -1,0 +1,15 @@
+C:\Users\pierr\Bachelor-project-Ludvig-Pierre-1\obj\Debug\net8.0\Bachelor-project-Ludvig-Pierre-1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pierr\Bachelor-project-Ludvig-Pierre-1\obj\Debug\net8.0\Bachelor-project-Ludvig-Pierre-1.AssemblyInfoInputs.cache
+C:\Users\pierr\Bachelor-project-Ludvig-Pierre-1\obj\Debug\net8.0\Bachelor-project-Ludvig-Pierre-1.AssemblyInfo.cs
+C:\Users\pierr\Bachelor-project-Ludvig-Pierre-1\obj\Debug\net8.0\Bachelor-project-Ludvig-Pierre-1.csproj.CoreCompileInputs.cache
+C:\Users\pierr\Bachelor-project-Ludvig-Pierre-1\obj\Debug\net8.0\Bachelor-project-Ludvig-Pierre-1.sourcelink.json
+C:\Users\pierr\Bachelor-project-Ludvig-Pierre-1\bin\Debug\net8.0\Bachelor-project-Ludvig-Pierre-1.exe
+C:\Users\pierr\Bachelor-project-Ludvig-Pierre-1\bin\Debug\net8.0\Bachelor-project-Ludvig-Pierre-1.deps.json
+C:\Users\pierr\Bachelor-project-Ludvig-Pierre-1\bin\Debug\net8.0\Bachelor-project-Ludvig-Pierre-1.runtimeconfig.json
+C:\Users\pierr\Bachelor-project-Ludvig-Pierre-1\bin\Debug\net8.0\Bachelor-project-Ludvig-Pierre-1.dll
+C:\Users\pierr\Bachelor-project-Ludvig-Pierre-1\bin\Debug\net8.0\Bachelor-project-Ludvig-Pierre-1.pdb
+C:\Users\pierr\Bachelor-project-Ludvig-Pierre-1\obj\Debug\net8.0\Bachelor-project-Ludvig-Pierre-1.dll
+C:\Users\pierr\Bachelor-project-Ludvig-Pierre-1\obj\Debug\net8.0\refint\Bachelor-project-Ludvig-Pierre-1.dll
+C:\Users\pierr\Bachelor-project-Ludvig-Pierre-1\obj\Debug\net8.0\Bachelor-project-Ludvig-Pierre-1.pdb
+C:\Users\pierr\Bachelor-project-Ludvig-Pierre-1\obj\Debug\net8.0\Bachelor-project-Ludvig-Pierre-1.genruntimeconfig.cache
+C:\Users\pierr\Bachelor-project-Ludvig-Pierre-1\obj\Debug\net8.0\ref\Bachelor-project-Ludvig-Pierre-1.dll
