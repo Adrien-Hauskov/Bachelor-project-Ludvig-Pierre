@@ -13,11 +13,12 @@ public class RandomProjection
         this.outputDimensions = outputDimensions;
         this.projectionMatrix = GenerateProjectionMatrix();
     }
-    
+
     //generates the matrix and fills it with gaussian values
     private double[,] GenerateProjectionMatrix()
     {
-        Random random = new Random();
+        // Use a fixed seed for deterministic behavior. We are just using 1 for now, it could be any number
+        Random random = new Random(1);
         double[,] matrix = new double[inputDimensions, outputDimensions];
         for (int i = 0; i < inputDimensions; i++)
         {
@@ -39,6 +40,7 @@ public class RandomProjection
 
         double[] projectedPoint = new double[outputDimensions];
 
+        // Perform projection
         for (int j = 0; j < outputDimensions; j++)
         {
             double sum = 0;
@@ -48,6 +50,16 @@ public class RandomProjection
             }
             projectedPoint[j] = sum;
         }
+
+        //As the filled gaussian values generated are outside of the accepted values of MccSDK,
+        //code is implemented to ensure that the values stay within certain ranges.
+        //While this may technically reduce security, in practice it still does meaningfull transformation of the template
+        //Negative values are projected into their absolute values, and values exceeding 256 are reduced to 256, which isn't optimal
+        projectedPoint[0] = Math.Max(0, Math.Min(256, Math.Abs(projectedPoint[0])));
+        projectedPoint[1] = Math.Max(0, Math.Min(256, Math.Abs(projectedPoint[1])));
+        projectedPoint[0] = Math.Round(projectedPoint[0]);
+        projectedPoint[1] = Math.Round(projectedPoint[1]);
+        projectedPoint[2] = (projectedPoint[2] % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
 
         return projectedPoint;
     }
