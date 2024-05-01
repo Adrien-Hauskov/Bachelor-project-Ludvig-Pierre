@@ -5,56 +5,39 @@ using System.Globalization;
 
 class Program
 {
+
     static void Main()
     {
-        string filePath = @"SampleMinutiae\1_1.txt";
-        string[] lines = File.ReadAllLines(filePath);
+        const string Employees = "Employees";
+        templateCreation tp = new templateCreation();
+        bool running = true;
 
-
-        string[] skippedLines = lines.Take(4).ToArray();
-
-        double[][] matrix = lines.Skip(4).Select(line =>
+        while (running)
         {
-            string[] parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            return parts.Select(part => double.Parse(part, CultureInfo.InvariantCulture)).ToArray();
-        }).ToArray();
+            Console.WriteLine("Enter ID");
+            string employeeId = Console.ReadLine();
+            string employeeDirectory = Path.Combine(Employees, employeeId);
 
-        Console.WriteLine("Original Matrix:");
-        PrintMatrix(matrix);
+            if (Directory.Exists(employeeDirectory))
+            {
+                if (Directory.GetFiles(employeeDirectory, "*.txt").Length > 0)
+                {
+                    Console.WriteLine("here we run the matcher to see if the templates match");
+                    //TODO implement matching from MccSDK
+                }
+                else
+                {
+                    Console.WriteLine("no template found, new fingerprint template created");
+                    tp.CreateTemplate(employeeDirectory);
+                    //TODO implement creating templates and saving to folder
+                }
+            }
+            else
+            {
+                Console.WriteLine("ID does not match employee");
+                Console.WriteLine("Make sure correct ID is entered or contact administrator");
+            }
 
-        // Define input and output dimensions for random projection, we choose the output dimension of 3, to keep the template format valid
-        int inputDimensions = matrix[0].Length;
-        int outputDimensions = 3;
-
-
-        RandomProjection rp = new RandomProjection(inputDimensions, outputDimensions);
-
-        // Project each row of the matrix using the random projection algorithm
-        for (int i = 0; i < matrix.Length; i++)
-        {
-            matrix[i] = rp.Project(matrix[i]);
-        }
-
-        // Combine the skipped lines with the projected matrix for MccSDK to be able to read it
-        double[][] combinedMatrix = new double[skippedLines.Length + matrix.Length][];
-        for (int i = 0; i < skippedLines.Length; i++)
-        {
-            combinedMatrix[i] = new double[] { double.Parse(skippedLines[i], CultureInfo.InvariantCulture) };
-        }
-        for (int i = 0; i < matrix.Length; i++)
-        {
-            combinedMatrix[skippedLines.Length + i] = matrix[i];
-        }
-
-        Console.WriteLine("\nCombined Matrix:");
-        PrintMatrix(combinedMatrix);
-    }
-
-    static void PrintMatrix(double[][] matrix)
-    {
-        foreach (var row in matrix)
-        {
-            Console.WriteLine(string.Join(" ", row.Select(d => d.ToString(CultureInfo.InvariantCulture))));
         }
     }
 }
