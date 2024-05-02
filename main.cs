@@ -14,7 +14,7 @@ class Program
 
         while (running)
         {
-            Console.WriteLine("Enter ID");
+            Console.WriteLine("Enter ID:");
             string employeeId = Console.ReadLine();
             string employeeDirectory = Path.Combine(Employees, employeeId);
 
@@ -22,14 +22,19 @@ class Program
             {
                 if (Directory.GetFiles(employeeDirectory, "*.txt").Length > 0)
                 {
-                    Console.WriteLine("here we run the matcher to see if the templates match");
+                    Console.WriteLine("Here we run the matcher to see if the templates match");
                     //TODO implement matching from MccSDK
                 }
                 else
                 {
-                    Console.WriteLine("no template found, new fingerprint template created");
-                    tp.CreateTemplate(employeeDirectory);
-                    //TODO implement creating templates and saving to folder
+                    Console.WriteLine("No template found, creating a new fingerprint template...");
+                    // Create the template and get the combined matrix
+                    double[][] combinedMatrix = tp.CreateTemplate(employeeId);
+
+                    // Save the combined matrix to a file
+                    tp.SaveTemplateToFile(employeeId, combinedMatrix);
+
+                    //TODO: Implement matching from MccSDK
                 }
             }
             else
@@ -37,7 +42,6 @@ class Program
                 Console.WriteLine("ID does not match employee");
                 Console.WriteLine("Make sure correct ID is entered or contact administrator");
             }
-
         }
     }
 }

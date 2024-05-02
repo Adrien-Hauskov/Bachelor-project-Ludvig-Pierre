@@ -5,7 +5,8 @@ using System.Globalization;
 
 public class templateCreation
 {
-    public void CreateTemplate(string directory)
+
+    public double[][] CreateTemplate(string employeeId)
     {
         string filePath = @"SampleMinutiae\1_1.txt";
         string[] lines = File.ReadAllLines(filePath);
@@ -48,6 +49,7 @@ public class templateCreation
 
         Console.WriteLine("\nCombined Matrix:");
         PrintMatrix(combinedMatrix);
+        return combinedMatrix;
     }
 
     public void PrintMatrix(double[][] matrix)
@@ -56,5 +58,27 @@ public class templateCreation
         {
             Console.WriteLine(string.Join(" ", row.Select(d => d.ToString(CultureInfo.InvariantCulture))));
         }
+    }
+
+    //method for saving the template to a file
+    public void SaveTemplateToFile(string employeeId, double[][] combinedMatrix)
+    {
+        string employeeDirectory = "Employees";
+        string filePath = Path.Combine(employeeDirectory, $"{employeeId}_template.txt");
+
+        if (!Directory.Exists(employeeDirectory))
+        {
+            Directory.CreateDirectory(employeeDirectory);
+        }
+
+        using (StreamWriter writer = new StreamWriter(filePath))
+        {
+            foreach (var row in combinedMatrix)
+            {
+                writer.WriteLine(string.Join(" ", row.Select(d => d.ToString(CultureInfo.InvariantCulture))));
+            }
+        }
+
+        Console.WriteLine($"Fingerprint template saved to file for employee {employeeId}");
     }
 }
