@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<MccMatchParameters xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MinME>0.3</MinME>
+  <DeltaTheta>2.3561944901923448</DeltaTheta>
+  <MuP>32</MuP>
+  <TauP>0.25</TauP>
+  <MinNP>4</MinNP>
+  <MaxNP>10</MaxNP>
+  <WR>0.5</WR>
+  <MuRho1>0.041666666666666664</MuRho1>
+  <TauRho1>-50</TauRho1>
+  <MuRho2>0.78539816339744828</MuRho2>
+  <TauRho2>-15</TauRho2>
+  <MuRho3>0.20943951023931953</MuRho3>
+  <TauRho3>-28</TauRho3>
+  <NRel>2</NRel>
+  <GlobalScoreMethod>LGS_DTR</GlobalScoreMethod>
+  <NormalizeLocalSimilarityMatrix>true</NormalizeLocalSimilarityMatrix>
+  <MaxNR>50</MaxNR>
+</MccMatchParameters>

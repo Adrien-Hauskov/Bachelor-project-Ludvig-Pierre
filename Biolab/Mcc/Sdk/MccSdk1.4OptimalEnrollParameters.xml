@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<MccEnrollParameters xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <R>70</R>
+  <NS>16</NS>
+  <ND>5</ND>
+  <SigmaS>7</SigmaS>
+  <SigmaD>0.52359877559829882</SigmaD>
+  <MuPsi>0.002</MuPsi>
+  <TauPsi>400</TauPsi>
+  <Omega>15</Omega>
+  <MinVC>0.3</MinVC>
+  <MinM>1</MinM>
+  <CylinderType>Bit</CylinderType>
+</MccEnrollParameters>

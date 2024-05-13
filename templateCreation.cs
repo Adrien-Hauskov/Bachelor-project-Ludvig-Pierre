@@ -10,7 +10,7 @@ public class templateCreation
     {
         string filePath = @"SampleMinutiae\1_1.txt";
         string[] lines = File.ReadAllLines(filePath);
-
+        
 
         string[] skippedLines = lines.Take(4).ToArray();
 
@@ -62,23 +62,26 @@ public class templateCreation
 
     //method for saving the template to a file
     public void SaveTemplateToFile(string employeeId, double[][] combinedMatrix)
+{
+    string employeeDirectory = "Employees";
+    string filePath = Path.Combine(employeeDirectory, employeeId, $"{employeeId}_template.txt");
+
+    // Create the employee directory if it doesn't exist
+    if (!Directory.Exists(employeeDirectory))
     {
-        string employeeDirectory = "Employees";
-        string filePath = Path.Combine(employeeDirectory, $"{employeeId}_template.txt");
-
-        if (!Directory.Exists(employeeDirectory))
-        {
-            Directory.CreateDirectory(employeeDirectory);
-        }
-
-        using (StreamWriter writer = new StreamWriter(filePath))
-        {
-            foreach (var row in combinedMatrix)
-            {
-                writer.WriteLine(string.Join(" ", row.Select(d => d.ToString(CultureInfo.InvariantCulture))));
-            }
-        }
-
-        Console.WriteLine($"Fingerprint template saved to file for employee {employeeId}");
+        Directory.CreateDirectory(employeeDirectory);
     }
+
+    // Write the combined matrix to the template file
+    using (StreamWriter writer = new StreamWriter(filePath))
+    {
+        foreach (var row in combinedMatrix)
+        {
+            writer.WriteLine(string.Join(" ", row.Select(d => d.ToString(CultureInfo.InvariantCulture))));
+        }
+    }
+
+    Console.WriteLine($"Fingerprint template saved to file for employee {employeeId}");
+}
+
 }

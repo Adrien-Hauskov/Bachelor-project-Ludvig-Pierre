@@ -8,4 +8,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="MccSdk">
+      <HintPath>Biolab\Mcc\Sdk\MccSdk.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
