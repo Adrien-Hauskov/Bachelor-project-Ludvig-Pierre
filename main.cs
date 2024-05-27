@@ -2,59 +2,70 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Globalization;
+using BioLab.Biometrics.Mcc.Sdk;
 
 class Program
 {
     static void Main()
     {
-        string filePath = @"SampleMinutiae\1_1.txt";
-        string[] lines = File.ReadAllLines(filePath);
+        const string Employees = "Employees";
+        templateCreation tp = new templateCreation();
+        Matcher mr = new Matcher();
+        string fingerInput = @"SampleMinutiae\1_1.txt";
+        bool running = true;
+        mr.loadParams();
 
-
-        string[] skippedLines = lines.Take(4).ToArray();
-
-        double[][] matrix = lines.Skip(4).Select(line =>
+        while (running)
         {
-            string[] parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            return parts.Select(part => double.Parse(part, CultureInfo.InvariantCulture)).ToArray();
-        }).ToArray();
+            Console.WriteLine("Enter ID:");
+            string employeeId = Console.ReadLine();
+            string employeeDirectory = Path.Combine(Employees, employeeId);
 
-        Console.WriteLine("Original Matrix:");
-        PrintMatrix(matrix);
+            // Create the template and get the combined matrix
+            double[][] combinedMatrix = tp.CreateTemplate(employeeId);
 
-        // Define input and output dimensions for random projection, we choose the output dimension of 3, to keep the template format valid
-        int inputDimensions = matrix[0].Length;
-        int outputDimensions = 3;
+            if (Directory.Exists(employeeDirectory))
+            {
+                var templateFiles = Directory.GetFiles(employeeDirectory, "*.txt");
+                if (templateFiles.Length > 0)
+                {
+
+                    // Save the combined matrix to a temporary file
+                    string tempFilePath = tp.SaveTemplateToTempFile(combinedMatrix);
+
+                    // Assuming there's only one template file per employee
+                    string templateFile = templateFiles[0];
+
+                    // Pass the file path to the matchTemplates method
+                    mr.matchTemplates(tempFilePath, templateFile);
+
+                    // Clean up the temporary file after matching
+                    File.Delete(tempFilePath);
+
+                }
+                else if (employeeId.ToLower() == "quit")
+                {
+                    Console.WriteLine("quitting");
+                    running = false;
+                }
+                else
+                {
+
+                    // Save the combined matrix to a file
+                    tp.SaveTemplateToFile(employeeId, combinedMatrix);
+
+                    Console.WriteLine("New template created, enter id again and rescan finger");
 
 
-        RandomProjection rp = new RandomProjection(inputDimensions, outputDimensions);
+                }
+            }
+            else
+            {
+                Console.WriteLine("ID does not match employee");
+                Console.WriteLine("Make sure correct ID is entered or contact administrator");
+            }
 
-        // Project each row of the matrix using the random projection algorithm
-        for (int i = 0; i < matrix.Length; i++)
-        {
-            matrix[i] = rp.Project(matrix[i]);
         }
 
-        // Combine the skipped lines with the projected matrix for MccSDK to be able to read it
-        double[][] combinedMatrix = new double[skippedLines.Length + matrix.Length][];
-        for (int i = 0; i < skippedLines.Length; i++)
-        {
-            combinedMatrix[i] = new double[] { double.Parse(skippedLines[i], CultureInfo.InvariantCulture) };
-        }
-        for (int i = 0; i < matrix.Length; i++)
-        {
-            combinedMatrix[skippedLines.Length + i] = matrix[i];
-        }
-
-        Console.WriteLine("\nCombined Matrix:");
-        PrintMatrix(combinedMatrix);
-    }
-
-    static void PrintMatrix(double[][] matrix)
-    {
-        foreach (var row in matrix)
-        {
-            Console.WriteLine(string.Join(" ", row.Select(d => d.ToString(CultureInfo.InvariantCulture))));
-        }
     }
 }
