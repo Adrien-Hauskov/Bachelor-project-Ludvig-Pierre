@@ -10,13 +10,12 @@ class Program
 
     static void Main()
     {
-        const string Employees = "Employees";
+        const string Employees = "Employees"; //try enroll first explicit
         MccSdk.SetMccEnrollParameters(@"Biolab\Mcc\Sdk\MccPaperEnrollParameters.xml");
         MccSdk.SetMccMatchParameters(@"Biolab\Mcc\Sdk\MccPaperMatchParameters.xml");
-        var template1 = MccSdk.LoadMccTemplateFromTextFile(@"SampleMinutiae\1_1.txt");
+        var template1 = MccSdk.CreateMccTemplateFromTextTemplate(@"SampleMinutiae\1_1.txt");
         templateCreation tp = new templateCreation();
         bool running = true;
-        //var template1 = @"SampleMinutiae\1_1.txt";
         while (running)
         {
             Console.WriteLine("Enter ID:");
@@ -28,7 +27,7 @@ class Program
                 string[] templateFiles = Directory.GetFiles(employeeDirectory, "*.txt");
                 if (templateFiles.Length > 0)
                 {   
-                    var template2 = MccSdk.LoadMccTemplateFromTextFile(@"Employees\1\1_template.txt"); 
+                    var template2 = MccSdk.CreateMccTemplateFromTextTemplate(@"Employees\1\1_template.txt"); 
                     Console.WriteLine("Here we run the matcher to see if the templates match");
                     var score = MccSdk.MatchMccTemplates(template1, template2);
                     Console.WriteLine(string.Format(CultureInfo.InvariantCulture,
