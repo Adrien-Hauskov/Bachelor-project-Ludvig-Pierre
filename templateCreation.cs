@@ -5,12 +5,10 @@ using System.Globalization;
 
 public class templateCreation
 {
-
     public double[][] CreateTemplate(string employeeId)
     {
         string filePath = @"SampleMinutiae\1_1.txt";
         string[] lines = File.ReadAllLines(filePath);
-        
 
         string[] skippedLines = lines.Take(4).ToArray();
 
@@ -20,13 +18,9 @@ public class templateCreation
             return parts.Select(part => double.Parse(part, CultureInfo.InvariantCulture)).ToArray();
         }).ToArray();
 
-        Console.WriteLine("Original Matrix:");
-        PrintMatrix(matrix);
-
         // Define input and output dimensions for random projection, we choose the output dimension of 3, to keep the template format valid
         int inputDimensions = matrix[0].Length;
         int outputDimensions = 3;
-
 
         RandomProjection rp = new RandomProjection(inputDimensions, outputDimensions);
 
@@ -47,41 +41,46 @@ public class templateCreation
             combinedMatrix[skippedLines.Length + i] = matrix[i];
         }
 
-        Console.WriteLine("\nCombined Matrix:");
-        PrintMatrix(combinedMatrix);
         return combinedMatrix;
     }
 
-    public void PrintMatrix(double[][] matrix)
-    {
-        foreach (var row in matrix)
-        {
-            Console.WriteLine(string.Join(" ", row.Select(d => d.ToString(CultureInfo.InvariantCulture))));
-        }
-    }
-
-    //method for saving the template to a file
+    // Method for saving the template to a file
     public void SaveTemplateToFile(string employeeId, double[][] combinedMatrix)
-{
-    string employeeDirectory = "Employees";
-    string filePath = Path.Combine(employeeDirectory, employeeId, $"{employeeId}_template.txt");
-
-    // Create the employee directory if it doesn't exist
-    if (!Directory.Exists(employeeDirectory))
     {
-        Directory.CreateDirectory(employeeDirectory);
-    }
+        string employeeDirectory = "Employees";
+        string filePath = Path.Combine(employeeDirectory, employeeId, $"{employeeId}_template.txt");
 
-    // Write the combined matrix to the template file
-    using (StreamWriter writer = new StreamWriter(filePath))
-    {
-        foreach (var row in combinedMatrix)
+        // Create the employee directory if it doesn't exist
+        if (!Directory.Exists(employeeDirectory))
         {
-            writer.WriteLine(string.Join(" ", row.Select(d => d.ToString(CultureInfo.InvariantCulture))));
+            Directory.CreateDirectory(employeeDirectory);
+        }
+
+        // Write the combined matrix to the template file
+        using (StreamWriter writer = new StreamWriter(filePath))
+        {
+            foreach (var row in combinedMatrix)
+            {
+                writer.WriteLine(string.Join(" ", row.Select(d => d.ToString(CultureInfo.InvariantCulture))));
+            }
         }
     }
 
-    Console.WriteLine($"Fingerprint template saved to file for employee {employeeId}");
-}
+    // Method for saving the template to a temporary file
+    public string SaveTemplateToTempFile(double[][] combinedMatrix)
+    {
+        // Create a temporary file
+        string tempFilePath = Path.GetTempFileName();
 
+        // Write the combined matrix to the temporary file
+        using (StreamWriter writer = new StreamWriter(tempFilePath))
+        {
+            foreach (var row in combinedMatrix)
+            {
+                writer.WriteLine(string.Join(" ", row.Select(d => d.ToString(CultureInfo.InvariantCulture))));
+            }
+        }
+
+        return tempFilePath;
+    }
 }
