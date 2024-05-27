@@ -13,5 +13,9 @@
       <HintPath>Biolab\Mcc\Sdk\MccSdk.dll</HintPath>
     </Reference>
   </ItemGroup>
-
+<ItemGroup>
+    <Content Include="SampleMinutiae\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

@@ -7,7 +7,12 @@ public class templateCreation
 {
     public double[][] CreateTemplate(string employeeId)
     {
-        string filePath = @"SampleMinutiae\1_1.txt";
+        /**
+        *Ideally, this would mostly be replaced by the input from a fingerprint scanner, which would call the enrollment methods
+        *From the MccSDK. The process below is for simulation a person scanner their finger. These are sample Minutiaes, fingerprints already scanned
+        *and ready to be enrolled and matched. They are also used for transformation. 
+        **/
+        string filePath = @"SampleMinutiae\1_2.txt";
         string[] lines = File.ReadAllLines(filePath);
 
         string[] skippedLines = lines.Take(4).ToArray();
