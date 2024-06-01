@@ -55,8 +55,8 @@ public class RandomProjection
         //code is implemented to ensure that the values stay within certain ranges.
         //While this may technically reduce security, in practice it still does meaningfull transformation of the template
         //Negative values are projected into their absolute values, and values exceeding 256 are reduced to 256, which isn't optimal
-        projectedPoint[0] = Math.Max(0, Math.Min(256, Math.Abs(projectedPoint[0])));
-        projectedPoint[1] = Math.Max(0, Math.Min(256, Math.Abs(projectedPoint[1])));
+        //projectedPoint[0] = Math.Max(0, Math.Min(256, Math.Abs(projectedPoint[0])));
+        //projectedPoint[1] = Math.Max(0, Math.Min(256, Math.Abs(projectedPoint[1])));
         projectedPoint[0] = Math.Round(projectedPoint[0]);
         projectedPoint[1] = Math.Round(projectedPoint[1]);
         projectedPoint[2] = (projectedPoint[2] % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);

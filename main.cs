@@ -4,6 +4,7 @@ using System.Linq;
 using System.Globalization;
 using BioLab.Biometrics.Mcc.Sdk;
 
+
 const string Employees = "Employees";
 templateCreation tp = new templateCreation();
 Matcher mr = new Matcher();
@@ -40,6 +41,7 @@ while (running)
         }
         else
         {
+
             // Save the combined matrix to a file
             tp.SaveTemplateToFile(employeeId, combinedMatrix);
 

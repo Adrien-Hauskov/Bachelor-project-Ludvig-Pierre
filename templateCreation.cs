@@ -2,11 +2,14 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Globalization;
+using System.Diagnostics;
 
 public class templateCreation
 {
     public double[][] CreateTemplate(string employeeId)
     {
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
         /**
         *Ideally, this would mostly be replaced by the input from a fingerprint scanner, which would call the enrollment methods
         *From the MccSDK. The process below is for simulation a person scanner their finger. These are sample Minutiaes, fingerprints already scanned
@@ -45,8 +48,10 @@ public class templateCreation
         {
             combinedMatrix[skippedLines.Length + i] = matrix[i];
         }
-
+        sw.Stop();
+        Console.WriteLine("elapsed{0}: ", sw.Elapsed);
         return combinedMatrix;
+
     }
 
     // Method for saving the template to a file
