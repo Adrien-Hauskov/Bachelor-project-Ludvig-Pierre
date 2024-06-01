@@ -4,68 +4,59 @@ using System.Linq;
 using System.Globalization;
 using BioLab.Biometrics.Mcc.Sdk;
 
-class Program
+
+const string Employees = "Employees";
+templateCreation tp = new templateCreation();
+Matcher mr = new Matcher();
+
+bool running = true;
+while (running)
 {
-    static void Main()
+    Console.WriteLine("Enter ID:");
+    string employeeId = Console.ReadLine();
+    string employeeDirectory = Path.Combine(Employees, employeeId);
+    Directory.CreateDirectory(Path.Combine(employeeDirectory));
+
+    // Create the template and get the combined matrix
+    double[][] combinedMatrix = tp.CreateTemplate(employeeId);
+
+    if (Directory.Exists(employeeDirectory))
     {
-        const string Employees = "Employees";
-        templateCreation tp = new templateCreation();
-        Matcher mr = new Matcher();
-        string fingerInput = @"SampleMinutiae\1_1.txt";
-        bool running = true;
-        mr.loadParams();
-
-        while (running)
+        var templateFiles = Directory.GetFiles(employeeDirectory, "*.txt");
+        if (templateFiles.Length > 0)
         {
-            Console.WriteLine("Enter ID:");
-            string employeeId = Console.ReadLine();
-            string employeeDirectory = Path.Combine(Employees, employeeId);
 
-            // Create the template and get the combined matrix
-            double[][] combinedMatrix = tp.CreateTemplate(employeeId);
+            // Save the template to temp file for matching
+            string tempFilePath = tp.SaveTemplateToTempFile(combinedMatrix);
 
-            if (Directory.Exists(employeeDirectory))
-            {
-                var templateFiles = Directory.GetFiles(employeeDirectory, "*.txt");
-                if (templateFiles.Length > 0)
-                {
+            string templateFile = templateFiles[0];
+            mr.matchTemplates(tempFilePath, templateFile);
+            /*clean up temp file after match for security
+            *ideally, this would be encrypted like much other stuff here
+            *I ran out of time so it will be for a future iteration once a real fingerprint scanner is implemented
+            */
 
-                    // Save the combined matrix to a temporary file
-                    string tempFilePath = tp.SaveTemplateToTempFile(combinedMatrix);
-
-                    // Assuming there's only one template file per employee
-                    string templateFile = templateFiles[0];
-
-                    // Pass the file path to the matchTemplates method
-                    mr.matchTemplates(tempFilePath, templateFile);
-
-                    // Clean up the temporary file after matching
-                    File.Delete(tempFilePath);
-
-                }
-                else if (employeeId.ToLower() == "quit")
-                {
-                    Console.WriteLine("quitting");
-                    running = false;
-                }
-                else
-                {
-
-                    // Save the combined matrix to a file
-                    tp.SaveTemplateToFile(employeeId, combinedMatrix);
-
-                    Console.WriteLine("New template created, enter id again and rescan finger");
-
-
-                }
-            }
-            else
-            {
-                Console.WriteLine("ID does not match employee");
-                Console.WriteLine("Make sure correct ID is entered or contact administrator");
-            }
+            File.Delete(tempFilePath);
 
         }
+        else
+        {
 
+            // Save the combined matrix to a file
+            tp.SaveTemplateToFile(employeeId, combinedMatrix);
+
+            Console.WriteLine("New template created, enter id again and rescan finger");
+
+        }
+    }
+    else
+    {
+        Console.WriteLine("ID does not match employee");
+        Console.WriteLine("Make sure correct ID is entered or contact administrator");
+    }
+    if (employeeId.ToLower() == "quit")
+    {
+        Console.WriteLine("Quitting");
+        running = false;
     }
 }
